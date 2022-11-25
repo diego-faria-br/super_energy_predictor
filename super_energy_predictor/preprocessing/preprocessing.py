@@ -7,9 +7,9 @@ import lightgbm as lgb
 
 def preprocess(X):
 
-    weather_preproc = pd.read_csv('../raw_data/weather_preproc.csv', parse_dates=['timestamp'])
+    weather_preproc = pd.read_csv("~/code/diego-faria-br/super_energy_predictor/raw_data/weather_preproc.csv", parse_dates=['timestamp'])
 
-    building_preproc = pd.read_csv("../raw_data/building_preproc.csv")
+    building_preproc = pd.read_csv("~/code/diego-faria-br/super_energy_predictor/raw_data/building_preproc.csv")
 
 
     X = pd.DataFrame.from_dict(X)
