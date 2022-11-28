@@ -40,6 +40,7 @@ def pred(building_id: int, meter: int, year: str, month: str):
     X = dates.rename(columns={0:'timestamp'})
     X = preprocess(X)
 
+
     model1 = lgb.Booster(model_file='raw_data/model1.txt')
     model2 = lgb.Booster(model_file='raw_data/model2.txt')
     y_pred = (model1.predict(X)+model2.predict(X))/2
