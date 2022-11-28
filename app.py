@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 
 '''
-# TaxiFareModel front
+## Super energy predictor
 '''
 st.markdown('''
 Remember that there are several ways to output content into your web page...
@@ -34,22 +34,16 @@ See ? No need to load a `model.joblib` file in this app, we do not even need to 
 
 url = 'https://taxifare.lewagon.ai/predict'
 
-if url == 'https://taxifare.lewagon.ai/predict':
+#http://localhost:8000/retrofit?building_id=1000&meter=0&initial_date=2017-01-01&final_date=2017-02-01
 
-    st.markdown('Maybe you want to use your own API for the prediction, not the one provided by Le Wagon...')
 
-'''
+response = requests.get('http://localhost:8000/retrofit?building_id=1000&meter=0&initial_date=2017-01-01&final_date=2017-02-01')
 
-2. Let's build a dictionary containing the parameters for our API...
+df = response.json()
 
-3. Let's call our API using the `requests` package...
+df
 
-4. Let's retrieve the prediction from the **JSON** returned by the API...
-
-## Finally, we can display the prediction to the user
-'''
-
-date = st.text_input('Date and Time (YYY-mm-dd HH:MM:SS)', '2018-10-10 05:00')
+""" date = st.text_input('Date and Time (YYY-mm-dd HH:MM:SS)', '2018-10-10 05:00')
 
 pickup_lat = st.number_input('Insert the pick-up latitute',format="%.6f")
 pickup_long = st.number_input('Insert the pick-up longitude',format="%.6f")
@@ -91,3 +85,4 @@ location = pd.DataFrame([[pickup_lat,pickup_long],
                          [dropoff_lat,dropoff_long]],columns=['lat','lon'])
 
 st.map(location)
+ """
