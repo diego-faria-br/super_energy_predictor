@@ -2,9 +2,11 @@ import streamlit as st
 import requests
 import pandas as pd
 import numpy as np
+import datetime
+import plotly.express as ps
 
 '''
-## Super energy predictor
+# Super Energy Predictior
 '''
 st.markdown('''
 Remember that there are several ways to output content into your web page...
@@ -12,77 +14,58 @@ Remember that there are several ways to output content into your web page...
 Either as with the title by just creating a string (or an f-string). Or as with this paragraph using the `st.` functions
 ''')
 
-'''
-## Here we would like to add some controllers in order to ask the user to select the parameters of the ride
 
-1. Let's ask for:
-- date and time
-- pickup longitude
-- pickup latitude
-- dropoff longitude
-- dropoff latitude
-- passenger count
-'''
-
-'''
-## Once we have these, let's call our API in order to retrieve a prediction
-
-See ? No need to load a `model.joblib` file in this app, we do not even need to know anything about Data Science in order to retrieve a prediction...
-
-🤔 How could we call our API ? Off course... The `requests` package 💡
-'''
-
-url = 'https://taxifare.lewagon.ai/predict'
-
-#http://localhost:8000/retrofit?building_id=1000&meter=0&initial_date=2017-01-01&final_date=2017-02-01
+url = 'http://127.0.0.1:8000/refit'
 
 
-response = requests.get('http://localhost:8000/retrofit?building_id=1000&meter=0&initial_date=2017-01-01&final_date=2017-02-01')
 
-df = response.json()
+building_id = st.number_input('Building ID',step=1,format=f'%i',min_value=0,max_value=9999)
 
-df
+meter = st.number_input('Meter',step=1,format=f'%i',min_value=0,max_value=4)
 
-""" date = st.text_input('Date and Time (YYY-mm-dd HH:MM:SS)', '2018-10-10 05:00')
 
-pickup_lat = st.number_input('Insert the pick-up latitute',format="%.6f")
-pickup_long = st.number_input('Insert the pick-up longitude',format="%.6f")
+# Limit dates to the available horizon
+min_date = datetime.datetime(2017, 1, 1)
+max_date = datetime.datetime(2018, 12, 31)
+value_date = datetime.datetime(2017, 1, 1)
 
-dropoff_lat = st.number_input('Insert the dropoff latitute',format="%.6f")
-dropoff_long = st.number_input('Insert the dropoff longitude',format="%.6f")
 
-passenger_count = st.number_input('Passengers',format="%.0f")
+initial_date = st.date_input("Initial Date",value=value_date, min_value=min_date,max_value=max_date)
+initial_date = str(initial_date)
+final_date = st.date_input("Final date",value=value_date, min_value=min_date,max_value=max_date)
+final_date = str(final_date)
 
-params = None
+primary_use = st.number_input('New Primary Use',format=f'%i',min_value=0,max_value=16)
+size_change = st.number_input('Proportion size change',step =.1, format=f'%.1f')
 
-if passenger_count:
-    params = {'pickup_datetime':date,
-            'pickup_longitude':pickup_long,
-            'pickup_latitude':pickup_lat,
-            'dropoff_longitude':dropoff_long,
-            'dropoff_latitude':dropoff_lat,
-            'passenger_count':int(passenger_count)
-            }
+freq =  st.selectbox("Frequency", ['Hourly','Daily',"Monthly"])
 
-if params == None:
-    params = {
-        'pickup_datetime':"2013-07-06 17:18:00",
-        'pickup_longitude':-73.950655,
-        'pickup_latitude':40.783282,
-        'dropoff_longitude':-73.950655,
-        'dropoff_latitude':40.783282,
-        'passenger_count':2
+accu = st.checkbox("Accumulates over the period")
 
-    }
+ty = freq=='Daily'
 
+ty
+
+params = {'building_id':building_id,
+          'meter':meter,
+          'initial_date':initial_date,
+          'final_date':final_date,
+          'primary_use':primary_use,
+          'size_change':size_change
+          }
 
 response = requests.get(url=url,params=params)
 
+y_json = response.json()
+y_recovered = pd.read_json(y_json)
 
-st.write(response.json())
 
-location = pd.DataFrame([[pickup_lat,pickup_long],
-                         [dropoff_lat,dropoff_long]],columns=['lat','lon'])
+if freq == 'Daily':
+    y_recovered = y_recovered.resample('D').mean()
 
-st.map(location)
- """
+if accu:
+    graph = ps.line(y_recovered.cumsum())
+else:
+    graph = ps.line(y_recovered)
+
+st.plotly_chart(graph)
