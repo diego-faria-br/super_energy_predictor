@@ -1,0 +1,8 @@
+gender-guesser==0.4.0
+matplotlib
+streamlit
+pandas
+xmltodict
+urllib3
+seaborn
+streamlit-lottie
