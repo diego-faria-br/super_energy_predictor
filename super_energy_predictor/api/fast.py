@@ -1,5 +1,3 @@
-from datetime import datetime
-import pytz
 import pandas as pd
 
 from super_energy_predictor.preprocessing.preprocessing import preprocess

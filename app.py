@@ -63,6 +63,9 @@ y_recovered = pd.read_json(y_json)
 if freq == 'Daily':
     y_recovered = y_recovered.resample('D').mean()
 
+if freq == 'Monthly':
+    y_recovered = y_recovered.resample('M').mean()
+
 if accu:
     graph = ps.line(y_recovered.cumsum())
 else:
