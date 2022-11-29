@@ -1,5 +1,5 @@
 import pandas as pd
-
+import numpy as np
 from super_energy_predictor.preprocessing.preprocessing import preprocess
 
 from fastapi import FastAPI
@@ -20,6 +20,7 @@ app.add_middleware(
 #uvicorn simple:app --reload
 
 @app.get("/predict")
+
 def pred(building_id: int,
          meter: int,
          timestamp: str
@@ -30,7 +31,9 @@ def pred(building_id: int,
     model2 = lgb.Booster(model_file='raw_data/model2.txt')
     y_pred = (model1.predict(X)+model2.predict(X))/2
 
-    to_return = {'meter_reading':float(y_pred)}
+    y_pred = pd.DataFrame(y_pred,columns=['Cons. (kwh)'],index = input_values.timestamp )
+
+    to_return = y_pred.to_json()
 
     return to_return
 
@@ -48,6 +51,7 @@ def refit(building_id: int,
     final_timestamp = final_date + ' '+ "23:00"
 
     dates = pd.date_range(initial_timestamp, final_timestamp, freq="1h")
+
     input_values=pd.DataFrame(dates)
     input_values['building_id'] = building_id
     input_values['meter'] = meter
