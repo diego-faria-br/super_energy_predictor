@@ -4,11 +4,6 @@ import pandas as pd
 import numpy as np
 import datetime
 import plotly.express as ps
-<<<<<<< HEAD
-import base64
-
-=======
->>>>>>> master
 
 '''
 # Super Energy Predictior
