@@ -42,10 +42,6 @@ freq =  st.selectbox("Frequency", ['Hourly','Daily',"Monthly"])
 
 accu = st.checkbox("Accumulates over the period")
 
-ty = freq=='Daily'
-
-ty
-
 params = {'building_id':building_id,
           'meter':meter,
           'initial_date':initial_date,
