@@ -14,7 +14,35 @@ from streamlit_lottie import st_lottie
 import math
 import plotly.express as ps
 
-st.set_page_config(page_title="Super Energy Predictor", layout="wide")
+
+#st.set_page_config(page_title="Super Energy Predictor", layout="wide")
+
+def add_logo():
+    st.markdown(
+        """
+        <style>
+            [data-testid="stSidebarNav"] {
+                background-image: url(https://www.flickr.com/photos/139110918@N07/27396259569);
+                background-repeat: no-repeat;
+                padding-top: 120px;
+                background-position: 20px 20px;
+            }
+            [data-testid="stSidebarNav"]::before {
+                content: "Green Leaves Co.";
+                margin-left: 20px;
+                margin-top: 20px;
+                font-size: 30px;
+                position: relative;
+                top: 100px;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+add_logo()
+
+
 
 
 def load_lottieurl(url: str):
@@ -155,7 +183,6 @@ energy_consumption  = float(y.sum())
 
 col1, col2 = st.columns(2)
 col1.metric("Energy consumption",f'{np.round(energy_consumption,2)} Kwh', "")
-
 
 response2= requests.get(url_mod1_2,params=params)
 
