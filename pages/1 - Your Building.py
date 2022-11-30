@@ -22,7 +22,7 @@ def add_logo():
         """
         <style>
             [data-testid="stSidebarNav"] {
-                background-image: url(https://www.flickr.com/photos/139110918@N07/27396259569);
+                background-image: url("/Users/diegooliveirafaria/code/diego-faria-br/super_energy_predictor/Sample.png");
                 background-repeat: no-repeat;
                 padding-top: 120px;
                 background-position: 20px 20px;
