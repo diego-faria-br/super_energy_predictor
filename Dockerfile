@@ -1,6 +1,7 @@
-FROM --platform=linux/amd64 tensorflow/tensorflow:2.10.0
-COPY taxifare/ /taxifare
-COPY requirements_prod.txt /requirements_prod.txt
+FROM --platform=linux/amd64
+FROM python:3.8.12-buster
+COPY super_energy_predictor super_energy_predictor
+COPY requirements.txt requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-CMD uvicorn taxifare.api.fast:app  --host 0.0.0.0
+CMD uvicorn super_energy_predictor.api.fast:app  --host 0.0.0.0

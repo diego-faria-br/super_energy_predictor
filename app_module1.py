@@ -1,13 +1,12 @@
 import urllib.request
 
-import gender_guesser.detector as gender
 import matplotlib
 import numpy as np
 import pandas as pd
 import requests
 import seaborn as sns
 import streamlit as st
-import xmltodict
+#import xmltodict
 from matplotlib.backends.backend_agg import RendererAgg
 from matplotlib.figure import Figure
 from pandas import json_normalize
