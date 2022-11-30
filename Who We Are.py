@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import datetime
 import plotly.express as ps
+<<<<<<< HEAD
 from PIL import Image
 import base64
 
@@ -60,6 +61,8 @@ st.markdown("# Home")
 
 #st.sidebar.image(add_logo(logo_path="your/logo/path", width=50, height=60))
 
+=======
+>>>>>>> master
 
 
 st.markdown('# Who We Are?')
