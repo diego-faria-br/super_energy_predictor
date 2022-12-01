@@ -4,39 +4,26 @@ import pandas as pd
 import numpy as np
 import datetime
 import plotly.express as ps
-from PIL import Image
 
-col1, mid, col2 = st.columns([1,1,6])
-with col1:
-    image = Image.open('super_energy_predictor/data/compare.png')
-    st.image(image, width = 150)
-with col2:
-    st.write('''# Super Energy Predictor''')
-    st.write('''## Building comparison''')
-
-
-st.markdown('''
-
-
-Within a fleet of buildings, quickly assess & compare buildings' energy consumption patterns.
-
-
-''')
+'''
+# Compare the Efficiency
+'''
 
 url = 'http://127.0.0.1:8000/compare'
 
 
 # Building IDs
-col1, col2 = st.columns([1,1])
 
-with col1:
-    building_id1 = st.number_input('Building to Compare (ID)',value=104,step=1,format=f'%i',min_value=0,max_value=9999)
-with col2:
-    building_id2 = st.number_input('Reference Bulding (ID)',value=100,step=1,format=f'%i',min_value=0,max_value=9999)
+building_id1 = st.number_input('Building to Compare (ID)',value=104,step=1,format=f'%i',min_value=0,max_value=9999)
+building_id2 = st.number_input('Reference Bulding (ID)',value=100,step=1,format=f'%i',min_value=0,max_value=9999)
 
 
 if building_id1 == building_id2:
     st.warning('Your are comparing with the same building', icon="⚠️")
+
+# Especific meter
+meter = st.number_input('Meter',step=1,format=f'%i',min_value=0,max_value=4)
+
 
 # Limit dates to the available horizon
 min_date = datetime.datetime(2017, 1, 1)
@@ -44,32 +31,13 @@ max_date = datetime.datetime(2018, 12, 31)
 value_date = datetime.datetime(2017, 1, 1)
 value_date_final = datetime.datetime(2017, 1, 31)
 
-col3, col4 = st.columns([1,1])
-with col3:
-    initial_date = st.date_input("Initial Date",value=value_date, min_value=min_date,max_value=max_date)
-    initial_date = str(initial_date)
-with col4:
-    final_date = st.date_input("Final date",value=value_date, min_value=min_date,max_value=max_date)
-    final_date = str(final_date)
 
+initial_date = st.date_input("Initial Date",value=value_date, min_value=min_date,max_value=max_date)
+initial_date = str(initial_date)
+final_date = st.date_input("Final date",value=value_date, min_value=min_date,max_value=max_date)
+final_date = str(final_date)
 
-# Especific meter
-col5, col6 = st.columns([1,1])
-with col5:
-    #meter = st.number_input('Meter',step=1,format=f'%i',min_value=0,max_value=4)
-    meter = col5.selectbox("Select a a meter", ('Electricity', 'Chilled water', 'Steam', 'Hot water'))
-    if meter == 'Electricity':
-        meter = 0
-    if meter == 'Chilled water':
-        meter = 1
-    if meter == 'Steam':
-        meter = 2
-    if meter == 'Hot water':
-        meter = 3
-
-with col6:
-    freq =  st.selectbox("Frequency", ['Hourly','Daily',"Monthly"])
-
+freq =  st.selectbox("Frequency", ['Hourly','Daily',"Monthly"])
 accu = st.checkbox("Accumulates over the period")
 
 params = {'building1':building_id1,
