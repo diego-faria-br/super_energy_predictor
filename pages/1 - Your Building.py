@@ -1,4 +1,15 @@
-import urllib.request
+###########################################################################################################
+###########################################################################################################
+###########################################################################################################
+######## Le Wagon batch #1011
+######## authors = Alexandre Chartier, Ana Gama, Diego Faria
+######## version = 1.0
+######## status = WIP
+######## deployed at = https://share.streamlit.io/tdenzl/bulian/main/BuLiAn.py
+######## layout inspired by https://share.streamlit.io/tylerjrichards/streamlit_goodreads_app/books.py
+###########################################################################################################
+###########################################################################################################
+###########################################################################################################
 
 import matplotlib
 import numpy as np
@@ -7,100 +18,65 @@ import requests
 import seaborn as sns
 import streamlit as st
 from matplotlib.backends.backend_agg import RendererAgg
-from matplotlib.figure import Figure
-from pandas import json_normalize
-from PIL import Image
-from streamlit_lottie import st_lottie
-import math
 import plotly.express as ps
-
-
-#st.set_page_config(page_title="Super Energy Predictor", layout="wide")
-
-def add_logo():
-    st.markdown(
-        """
-        <style>
-            [data-testid="stSidebarNav"] {
-                background-image: url("/Users/diegooliveirafaria/code/diego-faria-br/super_energy_predictor/Sample.png");
-                background-repeat: no-repeat;
-                padding-top: 120px;
-                background-position: 20px 20px;
-            }
-            [data-testid="stSidebarNav"]::before {
-                content: "Green Leaves Co.";
-                margin-left: 20px;
-                margin-top: 20px;
-                font-size: 30px;
-                position: relative;
-                top: 100px;
-            }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-
-add_logo()
+import datetime
+from PIL import Image
 
 
 
 
-def load_lottieurl(url: str):
-    r = requests.get(url)
-    if r.status_code != 200:
-        return None
-    return r.json()
+st.set_page_config(page_title="Predict the Future of Your Building", layout="wide")
 
 
-lottie_book = load_lottieurl("https://assets4.lottiefiles.com/temp/lf20_aKAfIn.json")
-st_lottie(lottie_book, speed=1, height=200, key="initial")
-
-#API address - to be changed after google cloud implementation
-
-url_mod1 = 'http://127.0.0.1:8000/predict'
-
-url_mod1_2 = 'http://127.0.0.1:8000/efficiency'
-
-
+### Data Import ###
 
 matplotlib.use("agg")
 
 _lock = RendererAgg.lock
 
+### Helper Methods ###
+
+########################
+### ANALYSIS METHODS ###
+########################
 
 sns.set_style("darkgrid")
 row0_spacer1, row0_1, row0_spacer2, row0_2, row0_spacer3 = st.columns(
     (0.1, 2, 0.2, 1, 0.1)
 )
 
-row0_1.title("Super Energy Predictor")
-
-with row0_2:
-    st.write("")
-
-row0_2.subheader(
-    "A Streamlit web app by [Alexandre Chartier](https://github.com/opxal89), [Ana Gama](https://github.com/anaflaviagama) and [Diego Faria](https://github.com/diego-faria-br/)"
-)
 
 
-row1_spacer1, row1_1, row1_spacer2 = st.columns((0.1, 3.2, 0.1))
+###################
 
-with row1_1:
-    st.markdown(
-        "Climate has been changing in plain sight. And unfortunately, extreme weather events from heat waves, floods, forest fires have become an everyday reality of our lives."
-    )
-    st.markdown(
-        "**Then, what can you do to effectively switch this path?**"
-    )
-    st.markdown(
-        "**We created Super Energy Predictor to help companies to develop strategies considering energy consumption and efficiency when choosing their new buildings.**"
-    )
 
+url_mod1 = 'http://127.0.0.1:8000/predict'
+
+url_mod1_2 = 'http://127.0.0.1:8000/efficiency'
+
+
+####
+
+####################
+### INTRODUCTION ###
+####################
+col1, mid, col2 = st.columns([1,1,6])
+with col1:
+    image = Image.open('super_energy_predictor/data/compare.png')
+    st.image(image, width = 150)
+with col2:
+    st.write('''# Super Energy Predictor''')
+    st.write('''## Analyse your Bulding''')
+
+#################
+### MODULE 1 ###
+#################
+
+### Inputs ###
 
 columns = st.columns(3)
 
 site_name = 'University of Central Florida, Orlando, FL'
-
 
 df = pd.read_csv('super_energy_predictor/data/building_selection.csv')
 site_name = columns[0].selectbox(
@@ -138,30 +114,196 @@ if meter == 'Hot water':
     meter_num = 3
 
 
-import datetime
-
 columns = st.columns(2)
 
 start_date = columns[0].date_input(
     "Select a start date",
     datetime.date(2019, 7, 1))
 
+start_date = str(start_date)
+
 end_date = columns[1].date_input(
     "Select an end date",
     datetime.date(2019, 7, 1))
+
+end_date = str(end_date)
+
+### Outputs ###
 
 st.markdown("""
     # Outputs
 """)
 
+if site_name == 'University of Central Florida, Orlando, FL':
+    col1, col2, col3 = st.columns([1,6,1])
+    with col1:
+        st.write("")
+    with col2:
+        st.markdown('## **University of Central Florida, Orlando, FL**')
+        st.image('img/img_0.png', width=900)
+    with col3:
+        st.write("")
+
+if site_name == 'Southampton University, UK':
+    col1, col2, col3 = st.columns([1,6,1])
+    with col1:
+        st.write("")
+    with col2:
+        st.markdown('## **Southampton University, UK**')
+        st.image('img/img_1.png', width=900)
+    with col3:
+        st.write("")
+
+if site_name == 'Arizona State University, Tempe, AZ':
+    col1, col2, col3 = st.columns([1,6,1])
+    with col1:
+        st.write("")
+    with col2:
+        st.markdown('## **Arizona State University, Tempe, AZ**')
+        st.image('img/img_2.png', width=900)
+    with col3:
+        st.write("")
+
+if site_name == 'Washington DC, WA':
+    col1, col2, col3 = st.columns([1,6,1])
+    with col1:
+        st.write("")
+    with col2:
+        st.markdown('## **Washington DC, WA**')
+        st.image('img/img_3.png', width=900)
+    with col3:
+        st.write("")
+
+if site_name == 'University of California, Berkeley, CA':
+    col1, col2, col3 = st.columns([1,6,1])
+    with col1:
+        st.write("")
+    with col2:
+        st.markdown('## **University of California, Berkeley, CA**')
+        st.image('img/img_4.png', width=900)
+    with col3:
+        st.write("")
+
+if site_name == 'London, UK':
+    col1, col2, col3 = st.columns([1,6,1])
+    with col1:
+        st.write("")
+    with col2:
+        st.markdown('## **London, UK**')
+        st.image('img/img_5.png', width=900)
+    with col3:
+        st.write("")
+
+if site_name == 'Philadelphia, PA':
+    col1, col2, col3 = st.columns([1,6,1])
+    with col1:
+        st.write("")
+    with col2:
+        st.markdown('## **Philadelphia, PA**')
+        st.image('img/img_6.png', width=900)
+    with col3:
+        st.write("")
+
+if site_name == 'Montreal/Ottawa, Canada (site 1)':
+    col1, col2, col3 = st.columns([1,6,1])
+    with col1:
+        st.write("")
+    with col2:
+        st.markdown('## **Montreal/Ottawa, Canada (site 1)**')
+        st.image('img/img_7.png', width=900)
+    with col3:
+        st.write("")
+
+if site_name == 'Orlando, FL':
+    col1, col2, col3 = st.columns([1,6,1])
+    with col1:
+        st.write("")
+    with col2:
+        st.markdown('## **Orlando, FL**')
+        st.image('img/img_8.png', width=900)
+    with col3:
+        st.write("")
+
+if site_name == 'University of Texas at Austin, Texas':
+    col1, col2, col3 = st.columns([1,6,1])
+    with col1:
+        st.write("")
+    with col2:
+        st.markdown('## **University of Texas at Austin, Texas**')
+        st.image('img/img_9.png', width=900)
+    with col3:
+        st.write("")
+
+if site_name == 'Weber State University, Ogden, Utah':
+    col1, col2, col3 = st.columns([1,6,1])
+    with col1:
+        st.write("")
+    with col2:
+        st.markdown('## **Weber State University, Ogden, Utah**')
+        st.image('img/img_10.png', width=900)
+    with col3:
+        st.write("")
+
+if site_name == 'Montreal/Ottawa, Canada (site 2)':
+    col1, col2, col3 = st.columns([1,6,1])
+    with col1:
+        st.write("")
+    with col2:
+        st.markdown('## **Montreal/Ottawa, Canada (site 2)**')
+        st.image('img/img_11.png', width=900)
+    with col3:
+        st.write("")
+
+if site_name == 'Ireland':
+    col1, col2, col3 = st.columns([1,6,1])
+    with col1:
+        st.write("")
+    with col2:
+        st.markdown('## **Ireland**')
+        st.image('img/img_12.png', width=900)
+    with col3:
+        st.write("")
+
+
+if site_name == 'University of Minnesota, Twin Cities, MN':
+    col1, col2, col3 = st.columns([1,6,1])
+    with col1:
+        st.write("")
+    with col2:
+        st.markdown('## **University of Minnesota, Twin Cities, MN**')
+        st.image('img/img_13.png', width=900)
+    with col3:
+        st.write("")
+
+if site_name == 'Charlottesville, VA':
+    col1, col2, col3 = st.columns([1,6,1])
+    with col1:
+        st.write("")
+    with col2:
+        st.markdown('## **Charlottesville, VA**')
+        st.image('img/img_14.png', width=900)
+    with col3:
+        st.write("")
+
+if site_name == 'Cornell University, Ithaca, New York':
+    col1, col2, col3 = st.columns([1,6,1])
+    with col1:
+        st.write("")
+    with col2:
+        st.markdown('## **Cornell University, Ithaca, New York**')
+        st.image('img/img_15.png', width=900)
+    with col3:
+        st.write("")
+
+st.text("")
+st.text("")
+
+
 col1, col2, col3 = st.columns(3)
-col1.metric("Size", df[df['building_id'] == selected_building_id]['square_feet'], 'sqft')
-col2.metric("Year built", df[df['building_id'] == selected_building_id]['year_built'].values[0])
+col1.metric("Size", str(df[df['building_id'] == selected_building_id]['square_feet'].values[0]) + ' sqft')
+col2.metric("Year built", (df[df['building_id'] == selected_building_id]['year_built'].values[0]))
 col3.metric("Primary use", df[df['building_id'] == selected_building_id]['primary_use'].values[0])
-
-start_date = str(start_date)
-end_date = str(end_date)
-
+####
 
 params = {'building_id': selected_building_id,
           'meter': meter_num,
@@ -174,19 +316,13 @@ response = requests.get(url_mod1,params=params)
 y = response.json()
 y = pd.read_json(y)
 energy_consumption  = float(y.sum())
-
-
-
-
-
-
-
 col1, col2 = st.columns(2)
+
 col1.metric("Energy consumption",f'{np.round(energy_consumption,2)} Kwh', "")
 
 response2= requests.get(url_mod1_2,params=params)
 
-response2.status_code
+#response2.status_code
 y_eff = response2.json()
 y_eff = pd.read_json(y_eff)
 efficiency = float(y_eff.sum())
