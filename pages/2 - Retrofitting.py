@@ -23,7 +23,7 @@ as well as primary use of the building in order to take into account specific pa
 ''')
 
 
-url = 'http://127.0.0.1:8000/refit'
+url = 'https://super-energy-predictor-cgtg3y2ydq-uc.a.run.app/refit'
 
 col1, col2 = st.columns([1,1])
 

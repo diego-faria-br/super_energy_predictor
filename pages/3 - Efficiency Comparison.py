@@ -23,7 +23,7 @@ Within a fleet of buildings, quickly assess & compare buildings' energy consumpt
 
 ''')
 
-url = 'http://127.0.0.1:8000/compare'
+url = 'https://super-energy-predictor-cgtg3y2ydq-uc.a.run.app/compare'
 
 
 # Building IDs
