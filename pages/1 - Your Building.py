@@ -62,7 +62,7 @@ url_mod1_2 = 'http://127.0.0.1:8000/efficiency'
 ####################
 col1, mid, col2 = st.columns([1,1,6])
 with col1:
-    image = Image.open('super_energy_predictor/data/compare.png')
+    image = Image.open('super_energy_predictor/data/image.png')
     st.image(image, width = 150)
 with col2:
     st.write('''# Super Energy Predictor''')
