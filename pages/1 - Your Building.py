@@ -50,9 +50,9 @@ row0_spacer1, row0_1, row0_spacer2, row0_2, row0_spacer3 = st.columns(
 ###################
 
 
-url_mod1 = 'http://127.0.0.1:8000/predict'
+url_mod1 = 'https://super-energy-predictor-cgtg3y2ydq-uc.a.run.app/predict'
 
-url_mod1_2 = 'http://127.0.0.1:8000/efficiency'
+url_mod1_2 = 'https://super-energy-predictor-cgtg3y2ydq-uc.a.run.app/efficiency'
 
 
 ####
