@@ -1,0 +1,11 @@
+# packaging
+pip>=9
+
+# data science
+numpy
+pandas
+
+
+fastapi
+lightgbm
+uvicorn
