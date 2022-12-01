@@ -11,7 +11,8 @@ with col1:
     image = Image.open('super_energy_predictor/data/Energy_Icon.gif')
     st.image(image, width = 150)
 with col2:
-    st.write('''# Super Energy Predictor - retrofitting simulation''')
+    st.write('''# Super Energy Predictor''')
+    st.write('''## Building retro-fitting''')
 
 
 st.markdown('''
