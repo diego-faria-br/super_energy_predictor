@@ -113,9 +113,22 @@ if freq == 'Daily':
 if freq == 'Monthly':
     y_recovered = y_recovered.resample('M').mean()
 
+
+st.text("")
+st.text("")
+
+st.markdown(f"Type of meter: **{meter}** ")
+
+
 if accu:
-    graph = ps.line(y_recovered.cumsum())
+    graph = ps.line(y_recovered.cumsum(),
+                    title = f'<b> {freq} Consumption - Building {building_id} - <i> Accumulated </i></b>',
+                    labels={'index':'Time','value':'Cons. KwH','variable':''}
+                    )
 else:
-    graph = ps.line(y_recovered)
+    graph = ps.line(y_recovered,
+                    title = f'<b> {freq} Consumption - Building {building_id} - <i> Accumulated </i></b>',
+                    labels={'index':'Time','value':'Cons. KwH','variable':''}
+                    )
 
 st.plotly_chart(graph)

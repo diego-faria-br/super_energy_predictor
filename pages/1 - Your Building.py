@@ -116,17 +116,26 @@ if meter == 'Hot water':
 
 columns = st.columns(2)
 
+
+min_date = datetime.datetime(2017, 1, 1)
+max_date = datetime.datetime(2018, 12, 31)
+
+value_date = datetime.datetime(2017, 1, 1)
+value_max = datetime.datetime(2017, 1, 30)
+
 start_date = columns[0].date_input(
     "Select a start date",
-    datetime.date(2019, 7, 1))
+    value =value_date,min_value=min_date,max_value=max_date)
 
 start_date = str(start_date)
 
 end_date = columns[1].date_input(
     "Select an end date",
-    datetime.date(2019, 7, 1))
+    value =value_max,min_value=min_date,max_value=max_date)
 
 end_date = str(end_date)
+
+
 
 ### Outputs ###
 
@@ -343,11 +352,22 @@ if freq == 'Daily':
     y_recovered = y_recovered.resample('D').mean()
 
 if freq == 'Monthly':
+    freq
     y_recovered = y_recovered.resample('M').mean()
 
+st.text("")
+
+st.markdown(f"Type of meter: **{meter}** ")
+
 if accu:
-    graph = ps.line(y_recovered.cumsum())
+    graph = ps.line(y_recovered.cumsum(),
+                    title = f'<b> {freq} Consumption - Building {selected_building_id} - <i> Accumulated </i></b>',
+                    labels={'index':'Time','value':'Cons. KwH','variable':''}
+                    )
 else:
-    graph = ps.line(y_recovered)
+    graph = ps.line(y_recovered,
+                    title = f'<b> {freq} Consumption - Building {selected_building_id}</b>',
+                    labels={'index':'Time','value':'Cons. KwH','variable':''}
+                    )
 
 st.plotly_chart(graph)
