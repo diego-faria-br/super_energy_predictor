@@ -6,8 +6,8 @@ import datetime
 import plotly.express as ps
 
 
-st.markdown('# Who We Are?')
+st.markdown('# The Company')
 
-st.markdown('# What We Do?')
+st.markdown('# The Technologies we use')
 
-st.markdown('# How to Use This App?')
+st.markdown('# How to use the App')
