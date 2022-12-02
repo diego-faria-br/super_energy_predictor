@@ -21,7 +21,7 @@ def add_logo(logo_path, width, height):
     return modified_logo
 
 my_logo = add_logo(logo_path="super_energy_predictor/data/background.png", width=700, height=300)
-st.image(my_logo)
+st.image(my_logo,use_column_width='always')
 
 
 #st.header(Image.open('super_energy_predictor/data/background.png'))

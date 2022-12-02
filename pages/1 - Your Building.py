@@ -356,6 +356,7 @@ if freq == 'Monthly':
     y_recovered = y_recovered.resample('M').mean()
 
 st.text("")
+st.text("")
 
 st.markdown(f"Type of meter: **{meter}** ")
 
